@@ -23,22 +23,22 @@ def main():
     # subprocess.run("docker-compose up -d", shell=True, check=True, cwd=PROJECT_ROOT)
     # time.sleep(10)
 
-    # print("[INFO] Creating Kafka topic...")
-    # subprocess.run("python -m kafka.create_payments_topic", shell=True, check=True, cwd=PROJECT_ROOT)
+    print("[INFO] Creating Kafka topic...")
+    subprocess.run("python3 -m fd_kafka.create_payments_topic", shell=True, check=True, cwd=PROJECT_ROOT)
 
     print("[INFO] Generating payment events...")
-    subprocess.run("python -m avro.generate_events", shell=True, check=True, cwd=PROJECT_ROOT)
+    subprocess.run("python3 -m avro.generate_events", shell=True, check=True, cwd=PROJECT_ROOT)
 
     print("[INFO] Starting Alert Dispatcher (FastAPI)...")
-    dispatcher_thread = run_process("uvicorn kafka.alert_dispatcher:app --reload", "Alert Dispatcher")
+    dispatcher_thread = run_process("python3 -m uvicorn fd_kafka.alert_dispatcher:app --reload", "Alert Dispatcher")
     time.sleep(5)
 
     print("[INFO] Starting Async Consumer...")
-    consumer_thread = run_process("python -m async_consumer", "Async Consumer")
+    consumer_thread = run_process("python3 -m async_consumer", "Async Consumer")
     time.sleep(2)
 
     print("[INFO] Starting Async Producer...")
-    producer_thread = run_process("python -m async_producer", "Async Producer")
+    producer_thread = run_process("python3 -m async_producer", "Async Producer")
 
     producer_thread.join()
     print("[INFO] Producer finished. You can stop the other services with Ctrl+C if desired.")

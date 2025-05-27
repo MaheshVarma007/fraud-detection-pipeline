@@ -1,7 +1,9 @@
-fastavro
-aiokafka
-kafka-python
-avro-python3
-uvicorn
 fastapi
-aiohttp
+uvicorn
+httpx
+pytest
+pytest-asyncio
+confluent-kafka
+avro-python3
+kafka-python
+prometheus_client
