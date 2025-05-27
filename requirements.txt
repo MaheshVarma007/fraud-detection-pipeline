@@ -1,0 +1,7 @@
+fastavro
+aiokafka
+kafka-python
+avro-python3
+uvicorn
+fastapi
+aiohttp
